@@ -16,4 +16,21 @@ const fetchMyIP = function(callback) {
   });
 };
 
-module.exports = fetchMyIP;
+const fetchCoordsByIP = function(IP, callback) {
+  request(`https://ipvigilante.com/${IP}`, (err, resp, body) => {
+    if (err) {
+      callback(err, null);
+      return;
+    }
+    if (resp.statusCode !== 200) {
+      const msg = `Status Code ${resp.statusCode} when fetching IP. Response: ${body}`;
+      callback(Error(msg), null);
+      return;
+    }
+    const {latitude, longitude} = JSON.parse(body).data;
+    
+    callback(null, {latitude, longitude});
+  });
+};
+
+module.exports = {fetchMyIP, fetchCoordsByIP};
