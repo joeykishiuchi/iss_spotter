@@ -2,8 +2,7 @@ const { nextISSTimesForMyLocation } = require('./iss');
 
 nextISSTimesForMyLocation((error, passTimes) => {
   if (error) {
-    console.log("It didn't work!" , err);
-    return;
+    return console.log("It didn't work!" , err);
   } else {
     for (const times of passTimes) {
       const day = new Date(times.risetime).toDateString();
